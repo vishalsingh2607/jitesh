@@ -26,7 +26,7 @@ public class CandidateController {
 	private CandidateService candidateService;
 
 	//Api for fetching all candidate details
-	@RequestMapping("/allcandidates")
+	@RequestMapping("/candidates")
 	public List<Candidate> getAllCandid()
 	{
 		return candidateService.getAllCandidiates();
