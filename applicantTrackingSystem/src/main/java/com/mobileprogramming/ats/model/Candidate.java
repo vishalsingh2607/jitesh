@@ -1,24 +1,35 @@
 package com.mobileprogramming.ats.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
+
 
 @Entity
 @Table(name="Candidate")
-public class Candidate {
+public class Candidate implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@Column(name="S.No.")
+	@Column(name="SerialNo")
 	private int serialNo;
 	
-	
+	@Size(max=50)
 	@Column(name="Name")
 	private String name;
 	
+	@Size(max=50)
 	@Column(name="Technology")
 	private String technology;
+	
 	
 	@Column(name="Contact_No")
 	private Long contactNo;
@@ -70,7 +81,7 @@ public class Candidate {
 	
 	@Column(name="Comments")
 	private String comments;
-
+	
 	public int getSerialNo() {
 		return serialNo;
 	}
@@ -235,7 +246,7 @@ public class Candidate {
 	
 	public Candidate() {
 		
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public Candidate(Integer serialNo, String name, String technology, Long contactNo, String hRRDate, Float expInYears,
@@ -263,6 +274,7 @@ public class Candidate {
 		this.location = location;
 		this.technicalInterviewer = technicalInterviewer;
 		this.comments = comments;
+		
 	}
 
 	@Override
@@ -279,4 +291,5 @@ public class Candidate {
 
 	
 	
+
 }

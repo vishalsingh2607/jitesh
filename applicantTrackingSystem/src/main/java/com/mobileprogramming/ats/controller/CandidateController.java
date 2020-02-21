@@ -6,13 +6,12 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mobileprogramming.ats.model.Candidate;
@@ -26,41 +25,47 @@ public class CandidateController {
 	private CandidateService candidateService;
 
 	//Api for fetching all candidate details
-	@RequestMapping("/candidates")
-	public List<Candidate> getAllCandid()
+	@RequestMapping(value="/allcandidates",method=RequestMethod.GET)
+	public ResponseEntity<List<Candidate>>  getAllCandid()
 	{
-		return candidateService.getAllCandidiates();
+		candidateService.getAllCandidiates();
+		return new ResponseEntity<List<Candidate>>(HttpStatus.OK);
 	}
 	
      //Api for fetching candidate list page wise
 	@RequestMapping(value="/candidateslist", method=RequestMethod.GET)
-	public Page<Candidate> fetchByPage(Pageable pageable)
+	public ResponseEntity<Page<Candidate>> fetchByPage(Pageable pageable)
 	{
-		return candidateService.findAllByPage(pageable);
+		candidateService.findAllByPage(pageable);
+		return new ResponseEntity<Page<Candidate>>(HttpStatus.OK);
 	}
 	
 	@RequestMapping("/candidates/{id}")
-	public Optional<Candidate> getCandid( @PathVariable Integer id)
+	public ResponseEntity<Optional<Candidate>> getCandid( @PathVariable Integer id)
 	{
-		return candidateService.getCandidate(id);
+		 candidateService.getCandidate(id);
+		return new ResponseEntity<Optional<Candidate>>(HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, value="/candidates")
-	public void addCandid(@RequestBody Candidate candidate)
+	@RequestMapping(method = RequestMethod.POST, value="/addcandidates")
+	public ResponseEntity<Candidate> addCandid(@RequestBody Candidate candidate)
 	{
 		candidateService.saveCandidate(candidate);
+		return new ResponseEntity<Candidate>(candidate,HttpStatus.ACCEPTED);
 	}
 	
-	@RequestMapping(method = RequestMethod.PUT,value="/candidates/{id}")
-	public void updateCandid(@RequestBody Candidate candidate, @PathVariable Integer id)
+	@RequestMapping(method = RequestMethod.PUT,value="/updatecandidates/{id}")
+	public ResponseEntity<Candidate> updateCandid(@RequestBody Candidate candidate, @PathVariable Integer id)
 	{
 		candidateService.updateCandidate(id, candidate);
+		return new ResponseEntity<Candidate>(candidate,HttpStatus.ACCEPTED);
 	}
 	
-	@RequestMapping(method = RequestMethod.DELETE,value="/candidates/{id}")
-	public void deleteCandid(@PathVariable Integer id)
+	@RequestMapping(method = RequestMethod.DELETE,value="/deletecandidates/{id}")
+	public ResponseEntity<Candidate> deleteCandid(@RequestBody Candidate candidate,@PathVariable Integer id)
 	{
 		candidateService.deleteCandidate(id);
+		return new ResponseEntity<Candidate>(candidate, HttpStatus.OK);
 	}
 
 	   
