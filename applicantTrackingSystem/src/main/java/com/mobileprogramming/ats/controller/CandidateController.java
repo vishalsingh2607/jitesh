@@ -17,57 +17,59 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mobileprogramming.ats.model.Candidate;
 import com.mobileprogramming.ats.service.CandidateService;
 
-@RestController
+@RestController("/candidateapi")
 public class CandidateController {
-		
-     
+
 	@Autowired
 	private CandidateService candidateService;
 
-	//Api for fetching all candidate details
-	@RequestMapping(value="/allcandidates",method=RequestMethod.GET)
-	public ResponseEntity<List<Candidate>>  getAllCandid()
-	{
-		candidateService.getAllCandidiates();
-		return new ResponseEntity<List<Candidate>>(HttpStatus.OK);
+	// Api for fetching all candidate details
+	@RequestMapping(value="candidateapi/allcandidates", method = RequestMethod.GET)
+	public ResponseEntity<List<Candidate>> getAllCandid() {
+		if (candidateService.getAllCandidiates().isEmpty()) {
+			return new ResponseEntity<List<Candidate>>(HttpStatus.NO_CONTENT);
+		} else {
+			return new ResponseEntity<List<Candidate>>(candidateService.getAllCandidiates(),HttpStatus.OK);
+		}
 	}
-	
-     //Api for fetching candidate list page wise
-	@RequestMapping(value="/candidateslist", method=RequestMethod.GET)
-	public ResponseEntity<Page<Candidate>> fetchByPage(Pageable pageable)
-	{
-		candidateService.findAllByPage(pageable);
-		return new ResponseEntity<Page<Candidate>>(HttpStatus.OK);
+
+	// Api for fetching candidate list page wise
+	@RequestMapping(value ="candidateapi/candidateslist",method = RequestMethod.GET)
+	public ResponseEntity<Page<Candidate>> fetchByPage(Pageable pageable) {
+
+		if (candidateService.findAllByPage(pageable).isEmpty()) {
+			return new ResponseEntity<Page<Candidate>>(HttpStatus.NO_CONTENT);
+		} else {
+			return new ResponseEntity<Page<Candidate>>(candidateService.findAllByPage(pageable),HttpStatus.OK);
+		}
 	}
-	
-	@RequestMapping("/candidates/{id}")
-	public ResponseEntity<Optional<Candidate>> getCandid( @PathVariable Integer id)
-	{
-		 candidateService.getCandidate(id);
-		return new ResponseEntity<Optional<Candidate>>(HttpStatus.OK);
+
+	@RequestMapping(value="candidateapi/candidates/{id}",method = RequestMethod.GET)
+	public ResponseEntity<Optional<Candidate>> getCandid(@PathVariable Integer id) {
+		if (candidateService.getCandidate(id).isPresent()) {
+			return new ResponseEntity<Optional<Candidate>>(candidateService.getCandidate(id),HttpStatus.OK);
+		} else {
+			return new ResponseEntity<Optional<Candidate>>(HttpStatus.NOT_FOUND);
+		}
+
 	}
-	
-	@RequestMapping(method = RequestMethod.POST, value="/addcandidates")
-	public ResponseEntity<Candidate> addCandid(@RequestBody Candidate candidate)
-	{
+
+	@RequestMapping(value = "candidateapi/addcandidates",method = RequestMethod.POST)
+	public ResponseEntity<Candidate> addCandid(@RequestBody Candidate candidate) {
 		candidateService.saveCandidate(candidate);
-		return new ResponseEntity<Candidate>(candidate,HttpStatus.ACCEPTED);
+		return new ResponseEntity<Candidate>(candidate, HttpStatus.ACCEPTED);
 	}
-	
-	@RequestMapping(method = RequestMethod.PUT,value="/updatecandidates/{id}")
-	public ResponseEntity<Candidate> updateCandid(@RequestBody Candidate candidate, @PathVariable Integer id)
-	{
+
+	@RequestMapping(value = "candidateapi/updatecandidates/{id}",method = RequestMethod.PUT)
+	public ResponseEntity<Candidate> updateCandid(@RequestBody Candidate candidate, @PathVariable Integer id) {
 		candidateService.updateCandidate(id, candidate);
-		return new ResponseEntity<Candidate>(candidate,HttpStatus.ACCEPTED);
+		return new ResponseEntity<Candidate>(candidate, HttpStatus.ACCEPTED);
 	}
-	
-	@RequestMapping(method = RequestMethod.DELETE,value="/deletecandidates/{id}")
-	public ResponseEntity<Candidate> deleteCandid(@RequestBody Candidate candidate,@PathVariable Integer id)
-	{
+
+	@RequestMapping(value = "candidateapi/deletecandidates/{id}",method = RequestMethod.DELETE)
+	public ResponseEntity<Candidate> deleteCandid(@RequestBody Candidate candidate, @PathVariable Integer id) {
 		candidateService.deleteCandidate(id);
 		return new ResponseEntity<Candidate>(candidate, HttpStatus.OK);
 	}
 
-	   
-	 
 }
