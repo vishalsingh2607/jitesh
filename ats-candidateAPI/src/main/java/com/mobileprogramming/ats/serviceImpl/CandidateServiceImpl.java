@@ -27,7 +27,7 @@ public class CandidateServiceImpl implements CandidateService {
 	@Override
 	public Optional<Candidate> getCandidate(Integer id) {
 		// TODO Auto-generated method stub
-		return null;
+		return candidateRepository.findById(id);
 	}
 
 	@Override
