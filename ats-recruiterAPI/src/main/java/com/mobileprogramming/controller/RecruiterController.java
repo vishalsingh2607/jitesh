@@ -17,6 +17,7 @@ import com.mobileprogramming.serviceImpl.RecruiterServiceImpl;
 
 
 @RestController
+@RequestMapping("/api")
 public class RecruiterController {
 	
 
