@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mobileprogramming.model.Recruiter;
+import com.mobileprogramming.model.Status;
 import com.mobileprogramming.serviceImpl.RecruiterServiceImpl;
+import com.mobileprogramming.serviceImpl.StatusServiceImpl;
 
 
 
@@ -24,6 +26,8 @@ public class RecruiterController {
 	@Autowired
 	private RecruiterServiceImpl service;
 	
+	
+
 	@RequestMapping(value="/getAllRecruiters",method = RequestMethod.GET)
 	public List<Recruiter> getAllRecruiters()
 	{
@@ -41,7 +45,7 @@ public class RecruiterController {
 	public String addRecruiter(@RequestBody Recruiter recruiter)
 	{
 		 service.saveRecruiter(recruiter);
-		return "Record Added Successfully";
+		return "Successfully Submitted Recruiter Profile. Please wait for Admin Approval";
 	}
 	
 	
@@ -53,6 +57,7 @@ public class RecruiterController {
 		  return "Record Updated Successfully";
 	  }
 	 
+	
 	
 	@RequestMapping(method = RequestMethod.DELETE,value="/deleteRecruiter/{id}")
 	public String deleteRecruit(@PathVariable Integer id)

@@ -1,9 +1,13 @@
 package com.mobileprogramming.model;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 
@@ -13,6 +17,7 @@ import javax.persistence.Table;
 public class Recruiter {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	 private Integer id;
      private String username;
      private String email;
@@ -20,18 +25,38 @@ public class Recruiter {
      private String location;
      private String password;
      private String role;
-     private boolean status;
+     
+     @OneToOne(targetEntity = Status.class,cascade = CascadeType.ALL)
+     private Status stat;
+     
+     
+	
+	public Status getStat() {
+		return stat;
+	}
+	public void setStat(Status stat) {
+		this.stat = stat;
+	}
+	private int tl_id;
+     private String tl_name;
+     
+	public int getTl_id() {
+		return tl_id;
+	}
+	public void setTl_id(int tl_id) {
+		this.tl_id = tl_id;
+	}
+	public String getTl_name() {
+		return tl_name;
+	}
+	public void setTl_name(String tl_name) {
+		this.tl_name = tl_name;
+	}
 	public String getRole() {
 		return role;
 	}
 	public void setRole(String role) {
 		this.role = role;
-	}
-	public boolean isStatus() {
-		return status;
-	}
-	public void setStatus(boolean status) {
-		this.status = status;
 	}
 	public Integer getId() {
 		return id;
@@ -75,18 +100,11 @@ public class Recruiter {
 	{
 		
 	}
-	public Recruiter(Integer id, String username, String email, long contactno, String location, String password) {
-		
-		this.id = id;
-		this.username = username;
-		this.email = email;
-		this.contactno = contactno;
-		this.location = location;
-		this.password = password;
-	}
+	
+	
 	public Recruiter(Integer id, String username, String email, long contactno, String location, String password,
-			String role, boolean status) {
-		
+			String role, Status stat, int tl_id, String tl_name) {
+		super();
 		this.id = id;
 		this.username = username;
 		this.email = email;
@@ -94,7 +112,8 @@ public class Recruiter {
 		this.location = location;
 		this.password = password;
 		this.role = role;
-		this.status = status;
+		this.stat = stat;
+		this.tl_id = tl_id;
+		this.tl_name = tl_name;
 	}
-	
 }

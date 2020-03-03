@@ -18,8 +18,8 @@ public class SecondServlet extends HttpServlet {
 		    response.setContentType("text/html");  
 		    PrintWriter out = response.getWriter();  
 		          
-		    String n=request.getParameter("username");  
-		    out.print("Welcome "+n);  
+		   // String n=request.getParameter("username");  
+		    out.print("<h1>Login Successfull</h1>");  
 		          
 		    out.close();  
 		    }  

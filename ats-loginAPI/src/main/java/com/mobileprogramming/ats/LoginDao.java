@@ -10,7 +10,7 @@ public class LoginDao {
 		boolean status=false;  
 		try{  
 		Class.forName("com.mysql.jdbc.Driver");  
-		Connection con=DriverManager.getConnection( "jdbc:mysql://localhost:3306/ats_login","root","system");  
+		Connection con=DriverManager.getConnection( "jdbc:mysql://localhost:3306/Ats_java","atsjava","At$J@va12");  
 		      
 		PreparedStatement ps=con.prepareStatement(  "select * from login where name=? and pass=?");  
 		ps.setString(1,name);  

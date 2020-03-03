@@ -23,7 +23,8 @@ public interface RecruiterService {
 
 	// Update
 	public String updateRecruiter(Integer id, Recruiter recruiter);
-
+	
+	
 	// Delete
 	public String deleteRecruiter(Integer id);
 	
