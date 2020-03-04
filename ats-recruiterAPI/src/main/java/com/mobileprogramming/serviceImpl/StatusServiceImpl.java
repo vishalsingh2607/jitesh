@@ -33,6 +33,12 @@ public class StatusServiceImpl implements StatusService{
 		return repo.findAll();
 	}
 
+	@Override
+	public String deleteStatus(Integer id) {
+		repo.deleteById(id);
+		return "Status deleted";
+	}
+
 	
 
 	

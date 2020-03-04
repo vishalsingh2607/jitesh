@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mobileprogramming.model.Recruiter;
-import com.mobileprogramming.model.Status;
 import com.mobileprogramming.serviceImpl.RecruiterServiceImpl;
-import com.mobileprogramming.serviceImpl.StatusServiceImpl;
 
 
 

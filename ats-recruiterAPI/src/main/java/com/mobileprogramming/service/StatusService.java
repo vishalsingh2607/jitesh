@@ -14,4 +14,7 @@ public interface StatusService {
 	public String createStatus(Status status);
 	// Update
 			public String updateStatus(Integer id, Status status);
+			
+			// Delete
+			public String deleteStatus(Integer id);
 }
