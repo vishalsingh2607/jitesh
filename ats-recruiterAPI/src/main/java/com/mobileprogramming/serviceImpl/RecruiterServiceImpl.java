@@ -55,4 +55,10 @@ public class RecruiterServiceImpl implements RecruiterService{
 		return recruiterRepo.findAll(pageable);
 	}
 
+	@Override
+	public Optional<Recruiter> findByEmail(String email) {
+		// TODO Auto-generated method stub
+		return recruiterRepo.findByEmail(email);
+	}
+
 }

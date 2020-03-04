@@ -24,7 +24,7 @@ public interface RecruiterService {
 	// Update
 	public String updateRecruiter(Integer id, Recruiter recruiter);
 	
-	
+	Optional<Recruiter> findByEmail(String email);
 	// Delete
 	public String deleteRecruiter(Integer id);
 	

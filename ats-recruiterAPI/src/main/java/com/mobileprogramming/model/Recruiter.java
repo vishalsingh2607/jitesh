@@ -27,8 +27,15 @@ public class Recruiter {
      @OneToOne(targetEntity = Status.class,cascade = CascadeType.ALL)
      private Status stat;
      
-     
+	/*
+	 * @OneToOne(targetEntity = Login.class,cascade = CascadeType.ALL) private Login
+	 * login;
+	 */
 	
+	/*
+	 * public Login getLogin() { return login; } public void setLogin(Login login) {
+	 * this.login = login; }
+	 */
 	public Status getStat() {
 		return stat;
 	}

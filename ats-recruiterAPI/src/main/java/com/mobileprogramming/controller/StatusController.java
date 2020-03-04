@@ -3,6 +3,7 @@ package com.mobileprogramming.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import com.mobileprogramming.model.Status;
 import com.mobileprogramming.serviceImpl.StatusServiceImpl;
 
 @RestController
+@CrossOrigin("*")
 public class StatusController {
 	@Autowired
 	private StatusServiceImpl statusservice;

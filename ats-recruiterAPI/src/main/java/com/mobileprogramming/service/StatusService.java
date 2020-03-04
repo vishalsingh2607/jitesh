@@ -10,8 +10,10 @@ import com.mobileprogramming.model.Status;
 public interface StatusService {
 	//GET
 	public List<Status> getAllStatus();
+	
 	//CREATE
 	public String createStatus(Status status);
+	
 	// Update
 			public String updateStatus(Integer id, Status status);
 			
