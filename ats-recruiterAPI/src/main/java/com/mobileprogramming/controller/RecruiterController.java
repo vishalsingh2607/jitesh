@@ -12,60 +12,107 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mobileprogramming.model.Recruiter;
+import com.mobileprogramming.response.Response;
 import com.mobileprogramming.serviceImpl.RecruiterServiceImpl;
-
-
-
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin("*")
+@CrossOrigin
 public class RecruiterController {
-	
 
 	@Autowired
 	private RecruiterServiceImpl service;
-	
-	
 
-	@RequestMapping(value="/getAllRecruiters",method = RequestMethod.GET)
-	public List<Recruiter> getAllRecruiters()
-	{
-		return service.getAllRecruiters();
+	// @CrossOrigin
+	@RequestMapping(value = "/getAllRecruiters", method = RequestMethod.GET)
+	public Response<Recruiter> getAllRecruiters() {
+		Response<Recruiter> response = new Response<Recruiter>();
+		List<Recruiter> recruiters = service.getAllRecruiters();
+		response.setMessage("Recruiters List");
+		response.setSuccess(true);
+		Recruiter[] myArray = new Recruiter[recruiters.size()];
+		recruiters.toArray(myArray);
+		response.setResponses(myArray);
+		return response;
 	}
-		
+
+	// @CrossOrigin
 	@RequestMapping("/getRecruiterById/{id}")
-	public Optional<Recruiter> getRecruiter(@PathVariable Integer id)
-	{
-		return service.getRecruiter(id);
-		
+	public Response<Recruiter> getRecruiter(@PathVariable Integer id) {
+		Response<Recruiter> response = new Response<>();
+		Optional<Recruiter> optional = service.getRecruiter(id);
+		response.setMessage("Recruiters By Id");
+		response.setSuccess(true);
+		response.setResponse(optional.get());
+		return response;
+
 	}
-	
-	@RequestMapping(method = RequestMethod.POST, value="/createRecruiter")
-	public String addRecruiter(@RequestBody Recruiter recruiter)
-	{
-		 service.saveRecruiter(recruiter);
-		return "Successfully Submitted Recruiter Profile. Please wait for Admin Approval";
+
+	// @CrossOrigin
+	@RequestMapping(method = RequestMethod.POST, value = "/createRecruiter")
+	public Response<Recruiter> addRecruiter(@RequestBody Recruiter recruiter) {
+		Response<Recruiter> response = new Response<Recruiter>();
+		// service.saveRecruiter(recruiter);
+		response.setMessage("Successfully Submitted Recruiter Profile. Please wait for Admin Approval");
+		response.setSuccess(true);
+		Recruiter recruiter2 = service.saveRecruiter(recruiter);
+		response.setResponse(recruiter2);
+		return response;
 	}
-	
-	
-	
-	  @RequestMapping(method = RequestMethod.PUT,value="/updateRecruiter/{id}") 
-	  public String updateRecruiter(@RequestBody Recruiter recruiter, @PathVariable Integer id) 
-	  { 
-		  service.saveRecruiter(recruiter);
-		  return "Record Updated Successfully";
-	  }
-	 
-	
-	
-	@RequestMapping(method = RequestMethod.DELETE,value="/deleteRecruiter/{id}")
-	public String deleteRecruit(@PathVariable Integer id)
-	{
+
+	// @CrossOrigin
+	@RequestMapping(method = RequestMethod.PUT, value = "/updateRecruiter/{id}")
+	public Response<Recruiter> updateRecruiter(@RequestBody Recruiter recruiter, @PathVariable Integer id) {
+		Response<Recruiter> response = new Response<>();
+		if (id != null) {
+			Optional<Recruiter> reOptional = service.getRecruiter(id);
+			if (reOptional.isPresent()) {
+				Recruiter recruiter2 = reOptional.get();
+				if (recruiter != null) {
+					if (recruiter.getEmail() != null) {
+						recruiter2.setEmail(recruiter.getEmail());
+					}
+					if (recruiter.getContactno() != 0) {
+						recruiter2.setContactno(recruiter.getContactno());
+					}
+					if (recruiter.getLocation() != null && recruiter.getLocation() != ""
+							&& recruiter.getLocation().trim().length() > 0) {
+						recruiter2.setLocation(recruiter.getLocation());
+					}
+					if (recruiter.getStatus() != null) {
+						recruiter2.setStatus(recruiter.getStatus());
+					}
+				} else {
+					response.setMessage("Please provide recruiter info !");
+					response.setSuccess(false);
+					return response;
+				}
+			} else {
+
+				response.setMessage("Please provide valid user id !");
+				response.setSuccess(false);
+				return response;
+			}
+			service.saveRecruiter(reOptional.get());
+			response.setResponse(reOptional.get());
+		} else {
+			response.setMessage("Id can not be empty or null !");
+			response.setSuccess(false);
+			return response;
+		}
+
+		response.setMessage("Record Updated Successfully!");
+		response.setSuccess(true);
+		return response;
+	}
+
+	// @CrossOrigin
+	@RequestMapping(method = RequestMethod.DELETE, value = "/deleteRecruiter/{id}")
+	public Response<Recruiter> deleteRecruit(@PathVariable Integer id) {
+		Response<Recruiter> response = new Response<>();
 		service.deleteRecruiter(id);
-		return "Record Deleted Successfully";
+		response.setMessage("Record Deleted Successfully!");
+		response.setSuccess(true);
+		return response;
 	}
-	}
-
-
-
+}

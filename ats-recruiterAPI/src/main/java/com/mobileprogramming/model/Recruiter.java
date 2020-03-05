@@ -8,10 +8,14 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 
 
 @Entity
 @Table(name ="recruiter_registration")
+@JsonInclude(value = Include.NON_NULL)
 public class Recruiter {
 	
 	@Id
@@ -23,46 +27,7 @@ public class Recruiter {
      private String location;
      private String password;
      private String role;
-     
-     @OneToOne(targetEntity = Status.class,cascade = CascadeType.ALL)
-     private Status stat;
-     
-	/*
-	 * @OneToOne(targetEntity = Login.class,cascade = CascadeType.ALL) private Login
-	 * login;
-	 */
-	
-	/*
-	 * public Login getLogin() { return login; } public void setLogin(Login login) {
-	 * this.login = login; }
-	 */
-	public Status getStat() {
-		return stat;
-	}
-	public void setStat(Status stat) {
-		this.stat = stat;
-	}
-	private int tl_id;
-     private String tl_name;
-     
-	public int getTl_id() {
-		return tl_id;
-	}
-	public void setTl_id(int tl_id) {
-		this.tl_id = tl_id;
-	}
-	public String getTl_name() {
-		return tl_name;
-	}
-	public void setTl_name(String tl_name) {
-		this.tl_name = tl_name;
-	}
-	public String getRole() {
-		return role;
-	}
-	public void setRole(String role) {
-		this.role = role;
-	}
+     private String Status;
 	public Integer getId() {
 		return id;
 	}
@@ -90,7 +55,6 @@ public class Recruiter {
 	public String getLocation() {
 		return location;
 	}
-
 	public void setLocation(String location) {
 		this.location = location;
 	}
@@ -100,15 +64,20 @@ public class Recruiter {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	public Recruiter()
-	{
-		
+	public String getRole() {
+		return role;
 	}
-	
-	
+	public void setRole(String role) {
+		this.role = role;
+	}
+	public String getStatus() {
+		return Status;
+	}
+	public void setStatus(String status) {
+		Status = status;
+	}
 	public Recruiter(Integer id, String username, String email, long contactno, String location, String password,
-			String role, Status stat, int tl_id, String tl_name) {
+			String role, String status) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -117,8 +86,22 @@ public class Recruiter {
 		this.location = location;
 		this.password = password;
 		this.role = role;
-		this.stat = stat;
-		this.tl_id = tl_id;
-		this.tl_name = tl_name;
+		Status = status;
 	}
+    public Recruiter()
+    {
+    	
+    }
+	/*
+	 * @OneToOne(targetEntity = Login.class,cascade = CascadeType.ALL) private Login
+	 * login;
+	 */
+	
+	/*
+	 * public Login getLogin() { return login; } public void setLogin(Login login) {
+	 * this.login = login; }
+	 */
+	
+	
+	
 }

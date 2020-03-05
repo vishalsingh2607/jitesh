@@ -10,6 +10,8 @@ import com.mobileprogramming.model.Recruiter;
 @Repository
 public interface RecruiterRepository extends JpaRepository<Recruiter,Integer> {
 
-	Optional<Recruiter> findByEmail(String email);
+	
+	
+	Optional<Recruiter> findByEmailAndPassword(String email,String password);
 
 }

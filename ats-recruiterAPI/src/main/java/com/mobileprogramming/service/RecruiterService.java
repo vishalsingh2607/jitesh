@@ -19,16 +19,20 @@ public interface RecruiterService {
 	public Optional<Recruiter> getRecruiter(Integer id);
 
 	// Create
-	public String saveRecruiter(Recruiter recruiter);
+	public Recruiter saveRecruiter(Recruiter recruiter);
 
 	// Update
 	public String updateRecruiter(Integer id, Recruiter recruiter);
 	
-	Optional<Recruiter> findByEmail(String email);
+	//Optional<Recruiter> findByEmail(String email);
 	// Delete
 	public String deleteRecruiter(Integer id);
 	
    //Fetching Candidate Details Pagewise
 	public Page<Recruiter> findAllByPage(Pageable pageable);
+
+	Optional<Recruiter> findByEmailAndPassword(String email, String pwd);
+
+	
 
 }

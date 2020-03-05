@@ -31,10 +31,10 @@ public class RecruiterServiceImpl implements RecruiterService{
 	}
 
 	@Override
-	public String saveRecruiter(Recruiter recruiter) {
+	public Recruiter saveRecruiter(Recruiter recruiter) {
 		
-		recruiterRepo.save(recruiter);
-		return "record added";
+		
+		return recruiterRepo.save(recruiter);
 	}
 
 	@Override
@@ -55,10 +55,12 @@ public class RecruiterServiceImpl implements RecruiterService{
 		return recruiterRepo.findAll(pageable);
 	}
 
-	@Override
-	public Optional<Recruiter> findByEmail(String email) {
+	
+   @Override
+	public Optional<Recruiter> findByEmailAndPassword(String email, String pwd) {
 		// TODO Auto-generated method stub
-		return recruiterRepo.findByEmail(email);
+		return recruiterRepo.findByEmailAndPassword(email, pwd)
+			;
 	}
 
 }
