@@ -27,9 +27,19 @@ public class Recruiter {
      private String location;
      private String password;
      private String role;
-     private String Status;
-	public Integer getId() {
+     private String status;
+     
+     @OneToOne(targetEntity = TeamLead.class,cascade = CascadeType.ALL)
+     private TeamLead teamlead;
+	
+     public Integer getId() {
 		return id;
+	}
+	public TeamLead getTeamlead() {
+		return teamlead;
+	}
+	public void setTeamlead(TeamLead teamlead) {
+		this.teamlead = teamlead;
 	}
 	public void setId(Integer id) {
 		this.id = id;
@@ -70,14 +80,16 @@ public class Recruiter {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	public String getStatus() {
-		return Status;
+	
+
+    public String getStatus() {
+		return status;
 	}
 	public void setStatus(String status) {
-		Status = status;
+		this.status = status;
 	}
 	public Recruiter(Integer id, String username, String email, long contactno, String location, String password,
-			String role, String status) {
+			String role, String status, TeamLead teamlead) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -86,9 +98,10 @@ public class Recruiter {
 		this.location = location;
 		this.password = password;
 		this.role = role;
-		Status = status;
+		this.status = status;
+		this.teamlead = teamlead;
 	}
-    public Recruiter()
+	public Recruiter()
     {
     	
     }

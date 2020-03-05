@@ -52,11 +52,87 @@ public class RecruiterController {
 	@RequestMapping(method = RequestMethod.POST, value = "/createRecruiter")
 	public Response<Recruiter> addRecruiter(@RequestBody Recruiter recruiter) {
 		Response<Recruiter> response = new Response<Recruiter>();
-		// service.saveRecruiter(recruiter);
-		response.setMessage("Successfully Submitted Recruiter Profile. Please wait for Admin Approval");
-		response.setSuccess(true);
-		Recruiter recruiter2 = service.saveRecruiter(recruiter);
-		response.setResponse(recruiter2);
+		
+		if(recruiter!=null)
+		{
+			if(recruiter.getEmail()!=null)
+			{
+			
+			}
+			else {
+				response.setMessage("email cant be null!");
+				response.setSuccess(false);
+				//response.setResponse(recruiter2);
+				return response;
+			}
+			
+			if(recruiter.getContactno()!=0)
+			{
+				
+			}else {
+				response.setMessage("contact should not be null!");
+				response.setSuccess(false);
+				//response.setResponse(recruiter2);
+			    return response;
+		}
+			
+			if(recruiter.getLocation()!=null)
+			{
+				
+			}else {
+				response.setMessage("location should not be null!");
+				response.setSuccess(false);
+				//response.setResponse(recruiter2);
+			    return response;
+			}
+		  if(recruiter.getUsername()!=null)
+		  {
+			  
+		  }else {
+			  response.setMessage("username cant not be null!");
+				response.setSuccess(false);
+				//response.setResponse(recruiter2);
+			    return response;
+		  }
+		  
+		  if(recruiter.getPassword()!=null)
+		  {
+			  
+		  }else {
+			  response.setMessage("password cant not be null!");
+				response.setSuccess(false);
+				//response.setResponse(recruiter2);
+			    return response;
+		  }
+		  
+		  if(recruiter.getRole()!=null)
+		  {
+			  
+		  }else {
+			  response.setMessage("role cant not be null!");
+				response.setSuccess(false);
+				//response.setResponse(recruiter2);
+			    return response;
+		  }
+		  
+		  if(recruiter.getStatus()!=null)
+		  {
+			  
+		  }else {
+			  response.setMessage("status cant not be null!");
+				response.setSuccess(false);
+				//response.setResponse(recruiter2);
+			    return response;
+		  }
+		  Recruiter recruiter2 = service.saveRecruiter(recruiter);
+		  response.setResponse(recruiter2);
+		  response.setMessage("Successfully Submitted Recruiter Profile. Please wait for Admin Approval"); 
+		  response.setSuccess(true);
+		
+			
+		// return response;
+		
+	}
 		return response;
 	}
 
@@ -110,9 +186,25 @@ public class RecruiterController {
 	@RequestMapping(method = RequestMethod.DELETE, value = "/deleteRecruiter/{id}")
 	public Response<Recruiter> deleteRecruit(@PathVariable Integer id) {
 		Response<Recruiter> response = new Response<>();
+		if(id!=null)
+		{
+			Optional<Recruiter> reOptional = service.getRecruiter(id);
+			if(reOptional.isPresent())
+			{
 		service.deleteRecruiter(id);
 		response.setMessage("Record Deleted Successfully!");
 		response.setSuccess(true);
+		
+		}else {
+			response.setMessage("please provide valid id!");
+			response.setSuccess(false);
+			return response;
+		}
+		
+		} /*
+			 * else { response.setMessage("id cant be null!"); response.setSuccess(false);
+			 * return response; }
+			 */
 		return response;
 	}
 }

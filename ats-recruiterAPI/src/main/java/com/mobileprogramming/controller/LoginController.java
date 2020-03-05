@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mobileprogramming.model.Credentials;
 import com.mobileprogramming.model.Recruiter;
 import com.mobileprogramming.response.Response;
-import com.mobileprogramming.serviceImpl.LoginService;
 import com.mobileprogramming.serviceImpl.RecruiterServiceImpl;
 
 @RestController

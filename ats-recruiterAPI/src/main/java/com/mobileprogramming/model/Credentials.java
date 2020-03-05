@@ -2,7 +2,7 @@ package com.mobileprogramming.model;
 
 public class Credentials {
 	
-	private int id;
+	//private int id;
 	private String email;
 	private String password;
 
