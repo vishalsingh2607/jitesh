@@ -35,7 +35,7 @@ public class Recruiter {
 	private String location;
 
 	@Column(length = 50)
-	@JsonIgnore
+	//@JsonIgnore
 	private String password;
 
 	@Column(length = 20)

@@ -14,6 +14,6 @@ public interface RecruiterRepository extends JpaRepository<Recruiter,Integer> {
 	
 	Optional<Recruiter> findByEmailAndPassword(String email,String password);
 	
-	Optional<Recruiter> findByEmail(String email);
+	
 
 }

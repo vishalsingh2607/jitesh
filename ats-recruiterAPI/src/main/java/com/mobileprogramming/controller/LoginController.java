@@ -1,5 +1,6 @@
 package com.mobileprogramming.controller;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,37 +28,50 @@ public class LoginController {
 
 	// @CrossOrigin
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public Response<Recruiter> checkUser(HttpServletRequest req, HttpServletResponse res, @RequestBody Credentials credential) {
+	public Response<Recruiter> checkUser(@RequestBody Recruiter recruiter) {
 		Response<Recruiter> response = new Response<Recruiter>();
-		Recruiter recruiter=new Recruiter();
+		try {
+	
+		//Recruiter recruiter=new Recruiter();
 		
-		String name = credential.getEmail();
-		String pwd = credential.getPassword();
+		String name = recruiter.getEmail();
+		String pwd = recruiter.getPassword();
+	
 		
 
 		Optional<Recruiter> isExist = service.findByEmailAndPassword(name, pwd);
 		Recruiter recruiter2=isExist.get();
 		if (isExist.isPresent()) {
-			if(recruiter.getStatus()!=false)
-			{
-					recruiter2.setStatus(recruiter.getStatus());
-				//	response.setStatus(recruiter2.getStatus());
-			
+			if(recruiter.getStatus()!=null) {
+				if(recruiter.getStatus().booleanValue()!=false)
+				{
+				recruiter2.setStatus(recruiter.getStatus());
 			}else {
-				response.setMessage("Can not login:Approval required by Admin ");
+				response.setMessage("Wait for admin approval");
 				response.setSuccess(false);
 			}
-		} else {
-			
-			response.setMessage("Bad Credentials");
-			response.setSuccess(false);
-
-		}
+			}
+			else {
+				response.setMessage("Status cant be null");
+			    response.setSuccess(false);
+			}
+		} 
 
 		response.setMessage("Login Successfull");
 		response.setSuccess(true);
-		response.setResponse(isExist.get());
+		response.setResponse(recruiter2);
 
+		
+		}catch(NoSuchElementException e)
+		{
+			response.setMessage("Bad Credentials");
+			response.setSuccess(false);
+		}
+		catch(Exception e)
+		{
+			response.setMessage("Internal Server Error");
+			response.setSuccess(false);
+		}
 		return response;
 	}
 }

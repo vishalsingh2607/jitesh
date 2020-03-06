@@ -25,12 +25,13 @@ public interface RecruiterService {
 	
     public Page<Recruiter> findAllByPage(Pageable pageable);
 
-	Optional<Recruiter> findByEmailAndPassword(String email, String pwd);
-
-	Optional<Recruiter> findByEmail(String email);
 	
 	public String updateRole(Integer id, Recruiter recruiter);
 	
 	public String updateStatus(Integer id, Recruiter recruiter);
+
+
+
+	Optional<Recruiter> findByEmailAndPassword(String email, String pwd);
 
 }

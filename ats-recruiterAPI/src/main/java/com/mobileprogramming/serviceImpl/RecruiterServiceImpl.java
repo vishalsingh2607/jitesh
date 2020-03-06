@@ -55,18 +55,8 @@ public class RecruiterServiceImpl implements RecruiterService{
 		return recruiterRepo.findAll(pageable);
 	}
 
-	
-   @Override
-	public Optional<Recruiter> findByEmailAndPassword(String email, String pwd) {
-		
-		return recruiterRepo.findByEmailAndPassword(email, pwd);
-	}
 
-@Override
-public Optional<Recruiter> findByEmail(String email) {
-	
-	return recruiterRepo.findByEmail(email);
-}
+
 
 @Override
 public String updateRole(Integer id, Recruiter recruiter) {
@@ -79,5 +69,13 @@ public String updateStatus(Integer id, Recruiter recruiter) {
 	recruiterRepo.save(recruiter);
 	return "Status Updated";
 }
+
+@Override
+public Optional<Recruiter> findByEmailAndPassword(String email, String pwd) {
+	// TODO Auto-generated method stub
+	return recruiterRepo.findByEmailAndPassword(email, pwd);
+}
+
+
 
 }

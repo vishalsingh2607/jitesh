@@ -112,13 +112,7 @@ public class RecruiterController {
 				return response;
 			}
 
-			/*
-			 * if (recruiter.isStatus() != null) {
-			 * 
-			 * } else { response.setMessage("status cant not be null!");
-			 * response.setSuccess(false); // response.setResponse(recruiter2); return
-			 * response; }
-			 */
+			
 			Recruiter recruiter2 = service.saveRecruiter(recruiter);
 			response.setResponse(recruiter2);
 			response.setMessage("Successfully Submitted Recruiter Profile. Please wait for Admin Approval");
