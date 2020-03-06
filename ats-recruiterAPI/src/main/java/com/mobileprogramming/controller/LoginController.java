@@ -18,7 +18,7 @@ import com.mobileprogramming.response.Response;
 import com.mobileprogramming.serviceImpl.RecruiterServiceImpl;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/login-api")
 @CrossOrigin
 public class LoginController {
 
@@ -29,27 +29,34 @@ public class LoginController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public Response<Recruiter> checkUser(HttpServletRequest req, HttpServletResponse res, @RequestBody Credentials credential) {
 		Response<Recruiter> response = new Response<Recruiter>();
-
+		Recruiter recruiter=new Recruiter();
+		
 		String name = credential.getEmail();
 		String pwd = credential.getPassword();
 		
 
 		Optional<Recruiter> isExist = service.findByEmailAndPassword(name, pwd);
-		
+		Recruiter recruiter2=isExist.get();
 		if (isExist.isPresent()) {
-			response.setMessage("Login Successfull");
-			response.setSuccess(true);
-			response.setResponse(isExist.get());
+			if(recruiter.getStatus()!=false)
+			{
+					recruiter2.setStatus(recruiter.getStatus());
+				//	response.setStatus(recruiter2.getStatus());
+			
+			}else {
+				response.setMessage("Can not login:Approval required by Admin ");
+				response.setSuccess(false);
+			}
 		} else {
 			
 			response.setMessage("Bad Credentials");
 			response.setSuccess(false);
 
-			// res.setStatus(200);
-
 		}
 
-		
+		response.setMessage("Login Successfull");
+		response.setSuccess(true);
+		response.setResponse(isExist.get());
 
 		return response;
 	}

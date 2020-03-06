@@ -58,9 +58,26 @@ public class RecruiterServiceImpl implements RecruiterService{
 	
    @Override
 	public Optional<Recruiter> findByEmailAndPassword(String email, String pwd) {
-		// TODO Auto-generated method stub
-		return recruiterRepo.findByEmailAndPassword(email, pwd)
-			;
+		
+		return recruiterRepo.findByEmailAndPassword(email, pwd);
 	}
+
+@Override
+public Optional<Recruiter> findByEmail(String email) {
+	
+	return recruiterRepo.findByEmail(email);
+}
+
+@Override
+public String updateRole(Integer id, Recruiter recruiter) {
+	recruiterRepo.save(recruiter);
+	return "Role Updated";
+}
+
+@Override
+public String updateStatus(Integer id, Recruiter recruiter) {
+	recruiterRepo.save(recruiter);
+	return "Status Updated";
+}
 
 }

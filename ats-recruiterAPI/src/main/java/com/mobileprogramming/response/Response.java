@@ -7,6 +7,10 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 public class Response<T> {
 	private Boolean success;
 	private String message;
+	
+	private Boolean status;
+	
+	private String role;
 	private T response;
 	private T[] responses;
 	
@@ -42,6 +46,22 @@ public class Response<T> {
 
 	public void setSuccess(Boolean success) {
 		this.success = success;
+	}
+
+	public Boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(Boolean status) {
+		this.status = status;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 }

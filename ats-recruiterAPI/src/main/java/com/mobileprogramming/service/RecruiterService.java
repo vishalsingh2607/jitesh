@@ -12,27 +12,25 @@ import com.mobileprogramming.model.Recruiter;
 @Service
 public interface RecruiterService {
 	
-	// Get All Recruiters
+	
 	public List<Recruiter> getAllRecruiters();
 
-	// Get Recruiter By Id
 	public Optional<Recruiter> getRecruiter(Integer id);
 
-	// Create
-	public Recruiter saveRecruiter(Recruiter recruiter);
+    public Recruiter saveRecruiter(Recruiter recruiter);
 
-	// Update
 	public String updateRecruiter(Integer id, Recruiter recruiter);
 	
-	//Optional<Recruiter> findByEmail(String email);
-	// Delete
 	public String deleteRecruiter(Integer id);
 	
-   //Fetching Candidate Details Pagewise
-	public Page<Recruiter> findAllByPage(Pageable pageable);
+    public Page<Recruiter> findAllByPage(Pageable pageable);
 
 	Optional<Recruiter> findByEmailAndPassword(String email, String pwd);
 
+	Optional<Recruiter> findByEmail(String email);
 	
+	public String updateRole(Integer id, Recruiter recruiter);
+	
+	public String updateStatus(Integer id, Recruiter recruiter);
 
 }
