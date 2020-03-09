@@ -1,15 +1,12 @@
 package com.mobileprogramming.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -44,19 +41,9 @@ public class Recruiter {
 	@Column(length = 20)
 	private Boolean status;
 
-	@OneToOne(targetEntity = TeamLead.class, cascade = CascadeType.ALL)
-	private TeamLead teamlead;
 
 	public Integer getId() {
 		return id;
-	}
-
-	public TeamLead getTeamlead() {
-		return teamlead;
-	}
-
-	public void setTeamlead(TeamLead teamlead) {
-		this.teamlead = teamlead;
 	}
 
 	public void setId(Integer id) {
@@ -120,7 +107,7 @@ public class Recruiter {
 	}
 
 	public Recruiter(Integer id, String username, String email, long contactno, String location, String password,
-			String role, boolean status, TeamLead teamlead) {
+			String role, boolean status) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -130,7 +117,7 @@ public class Recruiter {
 		this.password = password;
 		this.role = role;
 		this.status = status;
-		this.teamlead = teamlead;
+		
 	}
 
 	public Recruiter() {

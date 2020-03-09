@@ -3,6 +3,8 @@ package com.mobileprogramming.serviceImpl;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -75,6 +77,8 @@ public Optional<Recruiter> findByEmailAndPassword(String email, String pwd) {
 	// TODO Auto-generated method stub
 	return recruiterRepo.findByEmailAndPassword(email, pwd);
 }
+
+
 
 
 

@@ -1,17 +1,21 @@
 package com.mobileprogramming.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class TeamLead {
 	
 		@Id
-		@GeneratedValue(strategy = GenerationType.AUTO)
+		//@GeneratedValue(strategy = GenerationType.AUTO)
+		@Column(name="TL_ID")
 		private int id;
-		private String name;
+		
+		@Column(name="TL_NAME")
+	   private String name;
+		
+		
 		public int getId() {
 			return id;
 		}
@@ -24,10 +28,17 @@ public class TeamLead {
 		public void setName(String name) {
 			this.name = name;
 		}
+	
 		public TeamLead(int id, String name) {
 			
 			this.id = id;
 			this.name = name;
+		}
+	
+		
+		public TeamLead()
+		{
+			
 		}
 		
 }

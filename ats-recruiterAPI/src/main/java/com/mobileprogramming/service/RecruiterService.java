@@ -32,6 +32,6 @@ public interface RecruiterService {
 
 
 
-	Optional<Recruiter> findByEmailAndPassword(String email, String pwd);
+	Optional<Recruiter> findByEmailAndPassword(String email,String pwd);
 
 }

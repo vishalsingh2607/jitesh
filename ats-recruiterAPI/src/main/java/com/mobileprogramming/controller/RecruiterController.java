@@ -3,9 +3,9 @@ package com.mobileprogramming.controller;
 import java.util.List;
 import java.util.Optional;
 
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mobileprogramming.model.Recruiter;
+import com.mobileprogramming.model.TeamLead;
 import com.mobileprogramming.response.Response;
+import com.mobileprogramming.service.TeamLeadService;
 import com.mobileprogramming.serviceImpl.RecruiterServiceImpl;
 
 @RestController
@@ -25,6 +27,9 @@ public class RecruiterController {
 
 	@Autowired
 	private RecruiterServiceImpl service;
+
+	@Autowired
+	private TeamLeadService tlservice;
 
 	// @CrossOrigin
 	@RequestMapping(value = "/getAllRecruiters", method = RequestMethod.GET)
@@ -112,8 +117,8 @@ public class RecruiterController {
 				return response;
 			}
 
-			
 			Recruiter recruiter2 = service.saveRecruiter(recruiter);
+			recruiter2.setPassword(null);
 			response.setResponse(recruiter2);
 			response.setMessage("Successfully Submitted Recruiter Profile. Please wait for Admin Approval");
 			response.setSuccess(true);
@@ -209,9 +214,9 @@ public class RecruiterController {
 		Optional<Recruiter> reOptional = service.getRecruiter(id);
 		Recruiter recruiter2 = reOptional.get();
 		if (id != null) {
-			
+
 			if (reOptional.isPresent()) {
-				
+
 				if (recruiter.getStatus() != null) {
 					recruiter2.setStatus(recruiter.getStatus());
 				}
@@ -233,30 +238,53 @@ public class RecruiterController {
 
 	@PutMapping(value = "/updateRole/{id}")
 	public Response<Recruiter> updateRole(@RequestBody Recruiter recruiter, @PathVariable Integer id) {
-		Response<Recruiter> response=new Response<>();
-		Optional<Recruiter> reOptional=service.getRecruiter(id);
-		Recruiter recruiter2=reOptional.get();
-		if(id!=null)
-		{
-			
-			if(reOptional.isPresent())
-			{
-				
-				if(recruiter.getRole()!=null) {
+		Response<Recruiter> response = new Response<>();
+
+		TeamLead tl = new TeamLead();
+		Optional<Recruiter> reOptional = service.getRecruiter(id);
+		// Optional<TeamLead>reOptional2=tlservice.getLead(id);
+		Recruiter recruiter2 = reOptional.get();
+		// TeamLead teamlead=reOptional2.get();
+		try {
+		if (id != null) {
+
+			if (reOptional.isPresent()) {
+
+				if (recruiter.getRole() != null) {
+					//if(recruiter.getRole()=="TeamLead") {
+						
+					
 					recruiter2.setRole(recruiter.getRole());
-				}
-			}
+					tl.setId(recruiter2.getId());
+					tl.setName(recruiter2.getUsername());
+					tlservice.saveLead(tl);
+				
+						/*
+							 * else { recruiter2.setRole(recruiter.getRole()); tl.setId(recruiter2.getId());
+							 * 
+							 * tlservice.deleteLead(tl.getId()); }
+							 */
+		}
 			service.saveRecruiter(reOptional.get());
+
 			response.setRole(recruiter2.getRole());
-			
-		}else {
+
+		} else {
 			response.setMessage("id cant be null!");
 			response.setSuccess(false);
 			return response;
 		}
-		
+		}
 		response.setMessage("Role updated Successfully");
 		response.setSuccess(true);
+		//return response;
+
+	
+	}catch(EmptyResultDataAccessException e)
+	{
+		response.setMessage("No id exits");
+		response.setSuccess(false);
+	}
 		return response;
 	}
 }
