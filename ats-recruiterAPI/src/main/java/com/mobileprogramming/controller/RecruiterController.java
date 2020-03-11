@@ -245,13 +245,14 @@ public class RecruiterController {
 		// Optional<TeamLead>reOptional2=tlservice.getLead(id);
 		Recruiter recruiter2 = reOptional.get();
 		// TeamLead teamlead=reOptional2.get();
+		
 		try {
 		if (id != null) {
 
 			if (reOptional.isPresent()) {
 
 				if (recruiter.getRole() != null) {
-					//if(recruiter.getRole()=="TeamLead") {
+					if(recruiter.getRole().equals("TeamLead")) {
 						
 					
 					recruiter2.setRole(recruiter.getRole());
@@ -259,12 +260,18 @@ public class RecruiterController {
 					tl.setName(recruiter2.getUsername());
 					tlservice.saveLead(tl);
 				
-						/*
-							 * else { recruiter2.setRole(recruiter.getRole()); tl.setId(recruiter2.getId());
-							 * 
-							 * tlservice.deleteLead(tl.getId()); }
-							 */
+					}
+					else{ 
+								recruiter2.setRole(recruiter.getRole()); 
+								  //tl.setId(recruiter2.getId());
+							 Optional<TeamLead>opt=tlservice.getLead(recruiter2.getId());
+		                       TeamLead teamlead=opt.get();
+							  tlservice.deleteLead(teamlead.getId()); 
+							
+							  }
+							 
 		}
+				
 			service.saveRecruiter(reOptional.get());
 
 			response.setRole(recruiter2.getRole());

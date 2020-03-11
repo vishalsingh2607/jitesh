@@ -52,7 +52,7 @@ public class TeamLeadController {
 		return "Record Updated Successfully";
 	}
 	
-	@DeleteMapping()
+	@DeleteMapping("/deleteLead/{id}")
 	public String deleteLead(@PathVariable Integer id) {
 		service.deleteLead(id);
 		return "Record Deleted succussfully";
