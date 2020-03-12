@@ -1,6 +1,7 @@
 package com.mobileprogramming.controller;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mobileprogramming.model.Assigned;
+import com.mobileprogramming.model.Recruiter;
 import com.mobileprogramming.model.TeamLead;
+import com.mobileprogramming.response.Response;
+import com.mobileprogramming.service.AssignedService;
+import com.mobileprogramming.service.RecruiterService;
 import com.mobileprogramming.service.TeamLeadService;
 
 @RestController 
@@ -26,10 +32,23 @@ public class TeamLeadController {
 	@Autowired
 	private TeamLeadService service;
 	
+	@Autowired
+	private RecruiterService service2;
+	
+	
+	@Autowired
+	private AssignedService assignservice;
+	
 	@GetMapping(value="/getAllLeads")
-	public List<TeamLead> getAllLeads() {
-		// TODO Auto-generated method stub
-		return service.getAllLeads();
+	public Response<TeamLead> getAllLeads() {
+		Response<TeamLead> response=new Response<>();
+		List<TeamLead> list=service.getAllLeads();
+		TeamLead[] teamarray=new TeamLead[list.size()];
+		list.toArray(teamarray);
+		response.setMessage("Team Lead List");
+		response.setSuccess(true);
+		response.setResponses(teamarray);
+		return response;
 	}
 	
 	@GetMapping("/getLeadById/{id}")
@@ -45,12 +64,7 @@ public class TeamLeadController {
 		return service.saveLead(teamlead);
 	}
 	
-	@PutMapping("/updateLead/{id}")
-	public String updateLead(@PathVariable Integer id, @RequestBody TeamLead teamlead) {
-		// TODO Auto-generated method stub
-		service.saveLead(teamlead);
-		return "Record Updated Successfully";
-	}
+	
 	
 	@DeleteMapping("/deleteLead/{id}")
 	public String deleteLead(@PathVariable Integer id) {

@@ -42,9 +42,11 @@ public class Recruiter {
 	private Boolean status;
 
 
-	public Integer getId() {
+	
+public Integer getId() {
 		return id;
 	}
+
 
 	public void setId(Integer id) {
 		this.id = id;
@@ -119,6 +121,10 @@ public class Recruiter {
 		this.status = status;
 		
 	}
+	
+	
+
+	
 
 	public Recruiter() {
 

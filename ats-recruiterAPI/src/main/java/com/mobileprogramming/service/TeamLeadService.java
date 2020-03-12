@@ -9,6 +9,7 @@ import com.mobileprogramming.model.TeamLead;
 
 @Service
 public interface TeamLeadService {
+	
 	public List<TeamLead> getAllLeads();
 
 	public Optional<TeamLead> getLead(Integer id);

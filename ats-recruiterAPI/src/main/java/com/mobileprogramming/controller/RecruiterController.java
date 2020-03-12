@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mobileprogramming.model.Recruiter;
 import com.mobileprogramming.model.TeamLead;
 import com.mobileprogramming.response.Response;
+import com.mobileprogramming.service.AssignedService;
 import com.mobileprogramming.service.TeamLeadService;
 import com.mobileprogramming.serviceImpl.RecruiterServiceImpl;
 
@@ -30,6 +31,9 @@ public class RecruiterController {
 
 	@Autowired
 	private TeamLeadService tlservice;
+
+	@Autowired
+	private AssignedService assignservice;
 
 	// @CrossOrigin
 	@RequestMapping(value = "/getAllRecruiters", method = RequestMethod.GET)
@@ -239,59 +243,54 @@ public class RecruiterController {
 	@PutMapping(value = "/updateRole/{id}")
 	public Response<Recruiter> updateRole(@RequestBody Recruiter recruiter, @PathVariable Integer id) {
 		Response<Recruiter> response = new Response<>();
+		// Assigned assign=new Assigned();
 
-		TeamLead tl = new TeamLead();
 		Optional<Recruiter> reOptional = service.getRecruiter(id);
 		// Optional<TeamLead>reOptional2=tlservice.getLead(id);
 		Recruiter recruiter2 = reOptional.get();
 		// TeamLead teamlead=reOptional2.get();
-		
+
 		try {
-		if (id != null) {
+			if (id != null) {
 
-			if (reOptional.isPresent()) {
+				if (reOptional.isPresent()) {
+					if (recruiter.getRole() != null && recruiter.getRole().equals("TeamLead")) {
+						TeamLead tl = new TeamLead();
+						recruiter2.setRole(recruiter.getRole());
+						tl.setId(recruiter2.getId());
+						tl.setName(recruiter2.getUsername());
+						tlservice.saveLead(tl);
+						response.setRole(recruiter2.getRole());
 
-				if (recruiter.getRole() != null) {
-					if(recruiter.getRole().equals("TeamLead")) {
-						
-					
-					recruiter2.setRole(recruiter.getRole());
-					tl.setId(recruiter2.getId());
-					tl.setName(recruiter2.getUsername());
-					tlservice.saveLead(tl);
-				
+					} else {
+						recruiter2.setRole(recruiter.getRole());
+						// tl.setId(recruiter2.getId());
+						Optional<TeamLead> opt = tlservice.getLead(recruiter2.getId());
+						TeamLead teamlead = opt.get();
+						tlservice.deleteLead(teamlead.getId());
+						assignservice.findByTlId(teamlead.getId());
+						//service.saveRecruiter(reOptional.get() );
+						response.setRole(recruiter2.getRole());
 					}
-					else{ 
-								recruiter2.setRole(recruiter.getRole()); 
-								  //tl.setId(recruiter2.getId());
-							 Optional<TeamLead>opt=tlservice.getLead(recruiter2.getId());
-		                       TeamLead teamlead=opt.get();
-							  tlservice.deleteLead(teamlead.getId()); 
-							
-							  }
-							 
-		}
-				
-			service.saveRecruiter(reOptional.get());
+				}
 
-			response.setRole(recruiter2.getRole());
+			} else {
+				response.setMessage("id cant be null!");
+				response.setSuccess(false);
+				return response;
+			}
 
-		} else {
-			response.setMessage("id cant be null!");
+			response.setMessage("Role updated Successfully");
+			response.setSuccess(true);
+			// return response;
+
+		} catch (
+
+		EmptyResultDataAccessException e) {
+			response.setMessage("No id exits");
 			response.setSuccess(false);
-			return response;
 		}
-		}
-		response.setMessage("Role updated Successfully");
-		response.setSuccess(true);
-		//return response;
-
-	
-	}catch(EmptyResultDataAccessException e)
-	{
-		response.setMessage("No id exits");
-		response.setSuccess(false);
-	}
 		return response;
 	}
+
 }
