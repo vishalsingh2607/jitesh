@@ -1,20 +1,31 @@
 package com.mobileprogramming.ats.model;
 
 import java.io.Serializable;
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table(name="Candidate")
-public class Candidate implements Serializable{
-	
+@Table(name = "Candidate")
+public class Candidate implements Serializable {
+
 	/**
 	 * 
 	 */
@@ -22,203 +33,220 @@ public class Candidate implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="SerialNo")
-	private int serialNo;
-	
-	@Size(max=50)
-	@Column(name="Name")
-	private String name;
-	
-	@Size(max=50)
-	@Column(name="Technology")
-	private String technology;
-	
-	
-	@Column(name="Contact_No")
-	private Long contactNo;
-	
-	@Column(name="HRR_Date")
-	private String hRRDate;
-	
-	@Column(name="Exp_In_Years")
-	private Float expInYears;
-	
-	@Column(name="Technical_Rating")
-	private Integer technicalRating;
-	
-	@Column(name="Com_R")
-	private Integer comR;
-	
-	@Column(name="Current_Salary_In_LPA")
-	private Float currentSalaryInLPA;	
-	
-	@Column(name="Salary_Offered_In_LPA")
-	private Float salaryOfferedInLPA;
-	
-	@Column(name="Joining_Time_In_Days")
-	private Integer joiningTimeInDays;
-	
-	@Column(name="Offer_Status")
-	private String offerStatus;
-	
-	@Column(name="Offered_On")
-	private String offeredOn;
-	
-	@Column(name="Joining_On")
-	private String joiningOn;
-	
-	@Column(name="Joining_Status")
-	private String joiningStatus;
-	
-	@Column(name="Recruiter")
-	private String recruiter;
-	
-	@Column(name="Reporting_Head")
-	private String reportingHead;
-	
-	@Column(name="Location")
+	@Column(name = "CandidateId")
+	private Long candidateid;
+
+	@Size(max = 50)
+	@NotNull(message = "Please enter candidatename")
+	@Column(name = "CandidateName")
+	private String candidatename;
+
+	@NotNull(message = "Please enter fathername")
+	@Size(max = 50)
+	@Column(name = "FatherName")
+	private String fathername;
+
+	@NotNull(message = "Please provide date of birth")
+	@Column(name = "Dob")
+	private Date dob;
+
+	@NotNull(message = "Please provide valid email id")
+	@Email
+	@Column(name = "EmailId")
+	private String emailid;
+
+	@NotNull(message = "Please provide valid contact number")
+	@Size(min = 10, max = 10)
+	@Column(name = "ContactNo")
+	private String contactno;
+
+	@NotNull(message = "Please enter location")
+	@Column(name = "Location")
 	private String location;
-	
-	@Column(name="Technical_Interviewer")
-	private String technicalInterviewer;
-	
-	@Column(name="Comments")
+
+	@NotNull(message = "Please provide technology details")
+	@Column(name = "Technology")
+	private String technology;
+
+	@NotNull(message = "Please enter designation")
+	@Column(name = "Designation")
+	private String designation;
+
+	@NotNull(message = "Please enter total experience")
+	@Column(name = "TotalExperience")
+	private float totalexperience;
+
+	@NotNull(message = "Please provide current salary details per annum")
+	@Column(name = "CurrentSalaryInLpa")
+	private float currentsalaryinlpa;
+
+	@NotNull(message = "Please provide expected salary details per annum")
+	@Column(name = "ExpectedSalaryInLpa")
+	private float expectedsalaryinlpa;
+
+	@NotNull(message = "Please enter notice period details")
+	@Column(name = "NoticePeriodInDays")
+	private int noticeperiodindays;
+
+	@NotNull(message = "Please enter recruiterid")
+	@Column(name = "RecruiterId")
+	private String recruiterid;
+
+	@NotNull(message = "Please enter recruitername")
+	@Column(name = "RecruiterName")
+	private String recruitername;
+
+	@Column(name = "ResumeStoragePath")
+	private String resumestoragepath;
+
+	@NotNull(message = "Please enter offerstatus")
+	@Column(name = "OfferStatus")
+	@Enumerated(EnumType.STRING)
+	private OfferStatus offerstatus;
+
+	@Column(name = "TechnicalInterviewerName")
+	private String technicalinterviewername;
+
+	@Column(name = "TechnicalRating")
+	private String technicalrating;
+
+	@Column(name = "CommunicationRating")
+	private String communicationrating;
+
+	@Column(name = "Comments")
 	private String comments;
+
+	@Column(name = "Department")
+	private String department;
+
+	@Column(name = "JoiningStatus")
+	private String joiningstatus;
+
+	@Column(name = "ReportingHeadName")
+	private String reportingheadname;
+
+	@Column(name = "OfferedOn")
+	private Date offeredon;
+
+	@Column(name = "JoiningTimeInDays")
+	private String joiningtimeindays;
+
+	@Column(name="CandidateProfileCreatedAt")
+	private Timestamp candidateProfileCreatedAt;
 	
-	public int getSerialNo() {
-		return serialNo;
+	@Column(name="CandidateProfileUpdatedAt")
+	private Timestamp candidateProfileUpdatedAt;
+	
+	@Column(name="HrFeedbackCreatedAt")
+	private Timestamp hrFeedbackCreatedAt;
+	
+	@Column(name="HrFeedbackUpdatedAt")
+	private Timestamp hrFeedbackUpdatedAt;
+	
+	@Column(name="CandidateJoiningDetailCreatedAt")
+	private Timestamp candidateJoiningDetailCreatedAt;
+	
+	@Column(name="CandidateJoiningDetailUpdatedAt")
+	private Timestamp candidateJoiningDetailUpdatedAt;
+	
+	
+
+	public Timestamp getHrFeedbackCreatedAt() {
+		return hrFeedbackCreatedAt;
 	}
 
-	public void setSerialNo(int serialNo) {
-		this.serialNo = serialNo;
+	public void setHrFeedbackCreatedAt(Timestamp hrFeedbackCreatedAt) {
+		this.hrFeedbackCreatedAt = hrFeedbackCreatedAt;
 	}
 
-	public String getName() {
-		return name;
+	public Timestamp getHrFeedbackUpdatedAt() {
+		return hrFeedbackUpdatedAt;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setHrFeedbackUpdatedAt(Timestamp hrFeedbackUpdatedAt) {
+		this.hrFeedbackUpdatedAt = hrFeedbackUpdatedAt;
 	}
 
-	public String getTechnology() {
-		return technology;
+	public Timestamp getCandidateJoiningDetailCreatedAt() {
+		return candidateJoiningDetailCreatedAt;
 	}
 
-	public void setTechnology(String technology) {
-		this.technology = technology;
+	public void setCandidateJoiningDetailCreatedAt(Timestamp candidateJoiningDetailCreatedAt) {
+		this.candidateJoiningDetailCreatedAt = candidateJoiningDetailCreatedAt;
 	}
 
-	public Long getContactNo() {
-		return contactNo;
+	public Timestamp getCandidateJoiningDetailUpdatedAt() {
+		return candidateJoiningDetailUpdatedAt;
 	}
 
-	public void setContactNo(Long contactNo) {
-		this.contactNo = contactNo;
+	public void setCandidateJoiningDetailUpdatedAt(Timestamp candidateJoiningDetailUpdatedAt) {
+		this.candidateJoiningDetailUpdatedAt = candidateJoiningDetailUpdatedAt;
 	}
 
-	public String gethRRDate() {
-		return hRRDate;
+	public Timestamp getCandidateProfileCreatedAt() {
+		return candidateProfileCreatedAt;
 	}
 
-	public void sethRRDate(String hRRDate) {
-		this.hRRDate = hRRDate;
+	public void setCandidateProfileCreatedAt(Timestamp date) {
+		this.candidateProfileCreatedAt = date;
 	}
 
-	public Float getExpInYears() {
-		return expInYears;
+	
+
+	public Timestamp getCandidateProfileUpdatedAt() {
+		return candidateProfileUpdatedAt;
 	}
 
-	public void setExpInYears(Float expInYears) {
-		this.expInYears = expInYears;
+	public void setCandidateProfileUpdatedAt(Timestamp candidateProfileUpdatedAt) {
+		this.candidateProfileUpdatedAt = candidateProfileUpdatedAt;
 	}
 
-	public Integer getTechnicalRating() {
-		return technicalRating;
+	public Long getCandidateid() {
+		return candidateid;
 	}
 
-	public void setTechnicalRating(Integer technicalRating) {
-		this.technicalRating = technicalRating;
+	public void setCandidateid(Long candidateid) {
+		this.candidateid = candidateid;
 	}
 
-	public Integer getComR() {
-		return comR;
+	public String getCandidatename() {
+		return candidatename;
 	}
 
-	public void setComR(Integer comR) {
-		this.comR = comR;
+	public void setCandidatename(String candidatename) {
+		this.candidatename = candidatename;
 	}
 
-	public Float getCurrentSalaryInLPA() {
-		return currentSalaryInLPA;
+	public String getFathername() {
+		return fathername;
 	}
 
-	public void setCurrentSalaryInLPA(Float currentSalaryInLPA) {
-		this.currentSalaryInLPA = currentSalaryInLPA;
+	public void setFathername(String fathername) {
+		this.fathername = fathername;
 	}
 
-	public Float getSalaryOfferedInLPA() {
-		return salaryOfferedInLPA;
+	public Date getDob() {
+		return dob;
 	}
 
-	public void setSalaryOfferedInLPA(Float salaryOfferedInLPA) {
-		this.salaryOfferedInLPA = salaryOfferedInLPA;
+	public void setDob(Date dob) {
+		this.dob = dob;
 	}
 
-	public Integer getJoiningTimeInDays() {
-		return joiningTimeInDays;
+	public String getEmailid() {
+		return emailid;
 	}
 
-	public void setJoiningTimeInDays(Integer joiningTimeInDays) {
-		this.joiningTimeInDays = joiningTimeInDays;
+	public void setEmailid(String emailid) {
+		this.emailid = emailid;
 	}
 
-	public String getOfferStatus() {
-		return offerStatus;
+	public String getContactno() {
+		return contactno;
 	}
 
-	public void setOfferStatus(String offerStatus) {
-		this.offerStatus = offerStatus;
-	}
-
-	public String getOfferedOn() {
-		return offeredOn;
-	}
-
-	public void setOfferedOn(String offeredOn) {
-		this.offeredOn = offeredOn;
-	}
-
-	public String getJoiningOn() {
-		return joiningOn;
-	}
-
-	public void setJoiningOn(String joiningOn) {
-		this.joiningOn = joiningOn;
-	}
-
-	public String getJoiningStatus() {
-		return joiningStatus;
-	}
-
-	public void setJoiningStatus(String joiningStatus) {
-		this.joiningStatus = joiningStatus;
-	}
-
-	public String getRecruiter() {
-		return recruiter;
-	}
-
-	public void setRecruiter(String recruiter) {
-		this.recruiter = recruiter;
-	}
-
-	public String getReportingHead() {
-		return reportingHead;
-	}
-
-	public void setReportingHead(String reportingHead) {
-		this.reportingHead = reportingHead;
+	public void setContactno(String contactno) {
+		this.contactno = contactno;
 	}
 
 	public String getLocation() {
@@ -229,12 +257,108 @@ public class Candidate implements Serializable{
 		this.location = location;
 	}
 
-	public String getTechnicalInterviewer() {
-		return technicalInterviewer;
+	public String getTechnology() {
+		return technology;
 	}
 
-	public void setTechnicalInterviewer(String technicalInterviewer) {
-		this.technicalInterviewer = technicalInterviewer;
+	public void setTechnology(String technology) {
+		this.technology = technology;
+	}
+
+	public String getDesignation() {
+		return designation;
+	}
+
+	public void setDesignation(String designation) {
+		this.designation = designation;
+	}
+
+	public float getTotalexperience() {
+		return totalexperience;
+	}
+
+	public void setTotalexperience(float totalexperience) {
+		this.totalexperience = totalexperience;
+	}
+
+	public float getCurrentsalaryinlpa() {
+		return currentsalaryinlpa;
+	}
+
+	public void setCurrentsalaryinlpa(float currentsalaryinlpa) {
+		this.currentsalaryinlpa = currentsalaryinlpa;
+	}
+
+	public float getExpectedsalaryinlpa() {
+		return expectedsalaryinlpa;
+	}
+
+	public void setExpectedsalaryinlpa(float expectedsalaryinlpa) {
+		this.expectedsalaryinlpa = expectedsalaryinlpa;
+	}
+
+	public int getNoticeperiodindays() {
+		return noticeperiodindays;
+	}
+
+	public void setNoticeperiodindays(int noticeperiodindays) {
+		this.noticeperiodindays = noticeperiodindays;
+	}
+
+	public String getRecruiterid() {
+		return recruiterid;
+	}
+
+	public void setRecruiterid(String recruiterid) {
+		this.recruiterid = recruiterid;
+	}
+
+	public String getRecruitername() {
+		return recruitername;
+	}
+
+	public void setRecruitername(String recruitername) {
+		this.recruitername = recruitername;
+	}
+
+	public String getResumestoragepath() {
+		return resumestoragepath;
+	}
+
+	public void setResumestoragepath(String resumestoragepath) {
+		this.resumestoragepath = resumestoragepath;
+	}
+
+	public OfferStatus getOfferstatus() {
+		return offerstatus;
+	}
+
+	public void setOfferstatus(OfferStatus offerstatus) {
+		this.offerstatus = offerstatus;
+	}
+
+	public String getTechnicalinterviewername() {
+		return technicalinterviewername;
+	}
+
+	public void setTechnicalinterviewername(String technicalinterviewername) {
+		this.technicalinterviewername = technicalinterviewername;
+	}
+
+	public String getTechnicalrating() {
+		return technicalrating;
+	}
+
+	public void setTechnicalrating(String technicalrating) {
+		this.technicalrating = technicalrating;
+	}
+
+	public String getCommunicationrating() {
+		return communicationrating;
+	}
+
+	public void setCommunicationrating(String communicationrating) {
+		this.communicationrating = communicationrating;
 	}
 
 	public String getComments() {
@@ -245,54 +369,44 @@ public class Candidate implements Serializable{
 		this.comments = comments;
 	}
 
-	
-	
-	public Candidate() {
-		
-		
+	public String getDepartment() {
+		return department;
 	}
 
-	public Candidate(Integer serialNo, String name, String technology, Long contactNo, String hRRDate, Float expInYears,
-			Integer technicalRating, Integer comR, Float currentSalaryInLPA, Float salaryOfferedInLPA,
-			Integer joiningTimeInDays, String offerStatus, String offeredOn, String joiningOn, String joiningStatus,
-			String recruiter, String reportingHead, String location, String technicalInterviewer, String comments) {
-		super();
-		this.serialNo = serialNo;
-		this.name = name;
-		this.technology = technology;
-		this.contactNo = contactNo;
-		this.hRRDate = hRRDate;
-		this.expInYears = expInYears;
-		this.technicalRating = technicalRating;
-		this.comR = comR;
-		this.currentSalaryInLPA = currentSalaryInLPA;
-		this.salaryOfferedInLPA = salaryOfferedInLPA;
-		this.joiningTimeInDays = joiningTimeInDays;
-		this.offerStatus = offerStatus;
-		this.offeredOn = offeredOn;
-		this.joiningOn = joiningOn;
-		this.joiningStatus = joiningStatus;
-		this.recruiter = recruiter;
-		this.reportingHead = reportingHead;
-		this.location = location;
-		this.technicalInterviewer = technicalInterviewer;
-		this.comments = comments;
-		
+	public void setDepartment(String department) {
+		this.department = department;
 	}
 
-	@Override
-	public String toString() {
-		return "Candidate [serialNo=" + serialNo + ", name=" + name + ", technology=" + technology + ", contactNo="
-				+ contactNo + ", hRRDate=" + hRRDate + ", expInYears=" + expInYears + ", technicalRating="
-				+ technicalRating + ", comR=" + comR + ", currentSalaryInLPA=" + currentSalaryInLPA
-				+ ", salaryOfferedInLPA=" + salaryOfferedInLPA + ", joiningTimeInDays=" + joiningTimeInDays
-				+ ", offerStatus=" + offerStatus + ", offeredOn=" + offeredOn + ", joiningOn=" + joiningOn
-				+ ", joiningStatus=" + joiningStatus + ", recruiter=" + recruiter + ", reportingHead=" + reportingHead
-				+ ", location=" + location + ", technicalInterviewer=" + technicalInterviewer + ", comments=" + comments
-				+ "]";
+	public String getJoiningstatus() {
+		return joiningstatus;
 	}
 
-	
-	
+	public void setJoiningstatus(String joiningstatus) {
+		this.joiningstatus = joiningstatus;
+	}
+
+	public String getReportingheadname() {
+		return reportingheadname;
+	}
+
+	public void setReportingheadname(String reportingheadname) {
+		this.reportingheadname = reportingheadname;
+	}
+
+	public Date getOfferedon() {
+		return offeredon;
+	}
+
+	public void setOfferedon(Date offeredon) {
+		this.offeredon = offeredon;
+	}
+
+	public String getJoiningtimeindays() {
+		return joiningtimeindays;
+	}
+
+	public void setJoiningtimeindays(String joiningtimeindays) {
+		this.joiningtimeindays = joiningtimeindays;
+	}
 
 }
