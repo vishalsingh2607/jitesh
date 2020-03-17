@@ -23,4 +23,10 @@ public interface AssignedService {
 	public void findByTlId(Integer tl);
 	
 	
+	
+	public List<Assigned> getByTlId(Integer t1);
+	
+	public List<Assigned> findByRecruiterId(Integer t1);
+	
+	
 }

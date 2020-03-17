@@ -2,6 +2,8 @@ package com.mobileprogramming.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.mobileprogramming.model.Recruiter;
+import com.mobileprogramming.model.TeamLead;
 
 @JsonInclude(value = Include.NON_NULL)
 public class Response<T> {
@@ -10,7 +12,19 @@ public class Response<T> {
 	
 	private Boolean status;
 	
+	private TeamLead teamLead;
+	
+	private Recruiter recruiter;
+	public Recruiter getRecruiter() {
+		return recruiter;
+	}
+
+	public void setRecruiter(Recruiter recruiter) {
+		this.recruiter = recruiter;
+	}
+
 	private String role;
+	
 	private T response;
 	private T[] responses;
 	
@@ -62,6 +76,14 @@ public class Response<T> {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public TeamLead getTeamLead() {
+		return teamLead;
+	}
+
+	public void setTeamLead(TeamLead teamLead) {
+		this.teamLead = teamLead;
 	}
 
 }

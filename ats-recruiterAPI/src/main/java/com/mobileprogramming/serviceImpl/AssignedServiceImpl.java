@@ -58,6 +58,22 @@ public class AssignedServiceImpl implements AssignedService{
 
 	
 
+	@Override
+	public List<Assigned> getByTlId(Integer t1) {
+		// TODO Auto-generated method stub
+		return repo.findByTlId(t1);
+	}
+
+	@Override
+	public List<Assigned> findByRecruiterId(Integer t1) {
+		// TODO Auto-generated method stub
+		return repo.findByRecruiterId(t1);
+	}
+
+	
+
+	
+
 		
 	
 	

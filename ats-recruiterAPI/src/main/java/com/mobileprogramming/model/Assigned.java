@@ -17,10 +17,18 @@ public class Assigned {
 	@Column(name="TL_Id")
 	private int tlId;
 	
-	@Column(name="RECURITER_ID")
-	private int recuriterId;
+	@Column(name="RECRUITER_ID")
+	private int recruiterId;
 	
+	@Column(name="Status_Check")
+	private boolean statusCheck;
 	
+	public boolean isStatusCheck() {
+		return statusCheck;
+	}
+	public void setStatusCheck(boolean statusCheck) {
+		this.statusCheck = statusCheck;
+	}
 	public int getId() {
 		return id;
 	}
@@ -33,13 +41,24 @@ public class Assigned {
 	public void setTlId(int tlId) {
 		this.tlId = tlId;
 	}
-	public int getRecuriterId() {
-		return recuriterId;
+	public int getRecruiterId() {
+		return recruiterId;
 	}
-	public void setRecuriterId(int recuriterId) {
-		this.recuriterId = recuriterId;
+	public void setRecruiterId(int recruiterId) {
+		this.recruiterId = recruiterId;
+	}
+	public Assigned(int id, int tlId, int recruiterId, boolean statusCheck) {
+		super();
+		this.id = id;
+		this.tlId = tlId;
+		this.recruiterId = recruiterId;
+		this.statusCheck = statusCheck;
 	}
 	
 	
+	public Assigned()
+	{
+		
+	}
 	
 }

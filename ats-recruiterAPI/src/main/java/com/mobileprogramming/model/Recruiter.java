@@ -26,7 +26,7 @@ public class Recruiter {
 	private String email;
 
 	@Column(length = 25)
-	private long contactno;
+	private Long contactno;
 
 	@Column(length = 20)
 	private String location;
@@ -40,6 +40,8 @@ public class Recruiter {
 
 	@Column(length = 20)
 	private Boolean status;
+	
+	transient TeamLead  teamLead;
 
 
 	
@@ -68,11 +70,11 @@ public Integer getId() {
 		this.email = email;
 	}
 
-	public long getContactno() {
+	public Long getContactno() {
 		return contactno;
 	}
 
-	public void setContactno(long contactno) {
+	public void setContactno(Long contactno) {
 		this.contactno = contactno;
 	}
 
@@ -125,6 +127,18 @@ public Integer getId() {
 	
 
 	
+
+
+
+	public TeamLead getTeamLead() {
+		return teamLead;
+	}
+
+
+	public void setTeamLead(TeamLead teamLead) {
+		this.teamLead = teamLead;
+	}
+
 
 	public Recruiter() {
 

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mobileprogramming.model.Assigned;
 import com.mobileprogramming.model.Recruiter;
 import com.mobileprogramming.model.TeamLead;
 import com.mobileprogramming.response.Response;
@@ -36,15 +37,44 @@ public class RecruiterController {
 	private AssignedService assignservice;
 
 	// @CrossOrigin
+
 	@RequestMapping(value = "/getAllRecruiters", method = RequestMethod.GET)
 	public Response<Recruiter> getAllRecruiters() {
 		Response<Recruiter> response = new Response<Recruiter>();
 		List<Recruiter> recruiters = service.getAllRecruiters();
+
 		response.setMessage("Recruiters List");
 		response.setSuccess(true);
+		
+		for (Recruiter recruiter : recruiters) {
+			Optional<TeamLead> optional = tlservice.getLead(recruiter.getId());
+			if (optional.isPresent()) {
+				if(recruiter.getRole().equalsIgnoreCase("TeamLead"))
+				{
+					recruiter.setTeamLead(null);
+				}else {
+					recruiter.setTeamLead(optional.get());
+				}
+				
+				
+			}else {
+				List<Assigned> optional_ = assignservice.findByRecruiterId(recruiter.getId());
+				if(optional_ !=null && optional_.size() > 0) {
+					
+					Optional<TeamLead> optionalTeam = tlservice.getLead(optional_.get(0).getTlId());
+					
+					
+						recruiter.setTeamLead(optionalTeam.get());
+					
+				}
+			}
+
+			recruiter.setPassword(null);
+		}
 		Recruiter[] myArray = new Recruiter[recruiters.size()];
 		recruiters.toArray(myArray);
 		response.setResponses(myArray);
+
 		return response;
 	}
 
@@ -254,7 +284,7 @@ public class RecruiterController {
 			if (id != null) {
 
 				if (reOptional.isPresent()) {
-					if (recruiter.getRole() != null && recruiter.getRole().equals("TeamLead")) {
+					if (recruiter.getRole() != null && recruiter.getRole().equalsIgnoreCase("TeamLead")) {
 						TeamLead tl = new TeamLead();
 						recruiter2.setRole(recruiter.getRole());
 						tl.setId(recruiter2.getId());
@@ -268,9 +298,17 @@ public class RecruiterController {
 						Optional<TeamLead> opt = tlservice.getLead(recruiter2.getId());
 						TeamLead teamlead = opt.get();
 						tlservice.deleteLead(teamlead.getId());
-						assignservice.findByTlId(teamlead.getId());
-						//service.saveRecruiter(reOptional.get() );
+						// assignservice.findByTlId(teamlead.getId());
+						// service.saveRecruiter(reOptional.get() );
+						List<Assigned> ass = assignservice.getByTlId(teamlead.getId());
+						for (Assigned a : ass) {
+
+							a.setStatusCheck(false);
+							assignservice.saveDetails(a);
+						}
+
 						response.setRole(recruiter2.getRole());
+
 					}
 				}
 
@@ -284,9 +322,7 @@ public class RecruiterController {
 			response.setSuccess(true);
 			// return response;
 
-		} catch (
-
-		EmptyResultDataAccessException e) {
+		} catch (EmptyResultDataAccessException e) {
 			response.setMessage("No id exits");
 			response.setSuccess(false);
 		}

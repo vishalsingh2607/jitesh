@@ -1,10 +1,17 @@
 package com.mobileprogramming.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 @Entity
+@JsonInclude(content = Include.NON_NULL)
 public class TeamLead {
 	
 		@Id
@@ -14,6 +21,8 @@ public class TeamLead {
 		
 		@Column(name="TL_NAME")
 	   private String name;
+		@JsonIgnore
+	 transient List<Assigned>  assigneds;
 		
 		
 		public int getId() {
@@ -40,5 +49,12 @@ public class TeamLead {
 		{
 			
 		}
+		public List<Assigned> getAssigneds() {
+			return assigneds;
+		}
+		public void setAssigneds(List<Assigned> assigneds) {
+			this.assigneds = assigneds;
+		}
+		
 		
 }
