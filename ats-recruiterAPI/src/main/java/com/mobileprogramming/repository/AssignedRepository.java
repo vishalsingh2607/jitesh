@@ -8,16 +8,16 @@ import org.springframework.stereotype.Repository;
 import com.mobileprogramming.model.Assigned;
 
 @Repository
-public interface AssignedRepository extends JpaRepository<Assigned,Integer> {
-	
+public interface AssignedRepository extends JpaRepository<Assigned, Integer> {
+
 	/*
 	 * @Query(value = "SELECT * FROM USERS u WHERE u.status = 1", nativeQuery =
 	 * true)
 	 */
 	List<Assigned> findByTlId(Integer tl);
 
-	List<Assigned> findByRecruiterId(Integer t1);
-	
-	
+	Assigned findByRecruiterId(Integer t1);
+
+	Assigned findByTlIdAndRecruiterId(Integer t, Integer r);
 
 }

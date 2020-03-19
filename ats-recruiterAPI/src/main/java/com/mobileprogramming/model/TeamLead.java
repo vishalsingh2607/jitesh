@@ -17,7 +17,7 @@ public class TeamLead {
 		@Id
 		//@GeneratedValue(strategy = GenerationType.AUTO)
 		@Column(name="TL_ID")
-		private int id;
+		private Integer id;
 		
 		@Column(name="TL_NAME")
 	   private String name;
@@ -25,10 +25,11 @@ public class TeamLead {
 	 transient List<Assigned>  assigneds;
 		
 		
-		public int getId() {
+		
+		public Integer getId() {
 			return id;
 		}
-		public void setId(int id) {
+		public void setId(Integer id) {
 			this.id = id;
 		}
 		public String getName() {
@@ -38,7 +39,7 @@ public class TeamLead {
 			this.name = name;
 		}
 	
-		public TeamLead(int id, String name) {
+		public TeamLead(Integer id, String name) {
 			
 			this.id = id;
 			this.name = name;

@@ -45,27 +45,24 @@ public class RecruiterController {
 
 		response.setMessage("Recruiters List");
 		response.setSuccess(true);
-		
+
 		for (Recruiter recruiter : recruiters) {
 			Optional<TeamLead> optional = tlservice.getLead(recruiter.getId());
 			if (optional.isPresent()) {
-				if(recruiter.getRole().equalsIgnoreCase("TeamLead"))
-				{
+				if (recruiter.getRole().equalsIgnoreCase("TeamLead")) {
 					recruiter.setTeamLead(null);
-				}else {
+				} else {
 					recruiter.setTeamLead(optional.get());
 				}
-				
-				
-			}else {
-				List<Assigned> optional_ = assignservice.findByRecruiterId(recruiter.getId());
-				if(optional_ !=null && optional_.size() > 0) {
-					
-					Optional<TeamLead> optionalTeam = tlservice.getLead(optional_.get(0).getTlId());
-					
-					
-						recruiter.setTeamLead(optionalTeam.get());
-					
+
+			} else {
+				Assigned optional_ = assignservice.findByRecruiterId(recruiter.getId());
+				if (optional_ != null) {
+
+					Optional<TeamLead> optionalTeam = tlservice.getLead(optional_.getTlId());
+
+					recruiter.setTeamLead(optionalTeam.get());
+
 				}
 			}
 
@@ -298,7 +295,7 @@ public class RecruiterController {
 						Optional<TeamLead> opt = tlservice.getLead(recruiter2.getId());
 						TeamLead teamlead = opt.get();
 						tlservice.deleteLead(teamlead.getId());
-						// assignservice.findByTlId(teamlead.getId());
+						 assignservice.findByTlId(teamlead.getId());
 						// service.saveRecruiter(reOptional.get() );
 						List<Assigned> ass = assignservice.getByTlId(teamlead.getId());
 						for (Assigned a : ass) {

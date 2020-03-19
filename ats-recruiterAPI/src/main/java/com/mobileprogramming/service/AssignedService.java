@@ -26,7 +26,9 @@ public interface AssignedService {
 	
 	public List<Assigned> getByTlId(Integer t1);
 	
-	public List<Assigned> findByRecruiterId(Integer t1);
+	public Assigned findByRecruiterId(Integer t1);
+	
+	public Assigned getByTeamLeadAndRecruiter(Integer t1,Integer r);
 	
 	
 }

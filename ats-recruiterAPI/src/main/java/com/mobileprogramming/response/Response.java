@@ -1,5 +1,7 @@
 package com.mobileprogramming.response;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.mobileprogramming.model.Recruiter;
@@ -14,7 +16,14 @@ public class Response<T> {
 	
 	private TeamLead teamLead;
 	
+	private List<TeamLead> teamlead;
+	
+
 	private Recruiter recruiter;
+	
+	
+	private List<Recruiter> recruiters;
+	
 	public Recruiter getRecruiter() {
 		return recruiter;
 	}
@@ -27,6 +36,8 @@ public class Response<T> {
 	
 	private T response;
 	private T[] responses;
+	
+	
 	
 	public T[] getResponses() {
 		return responses;
@@ -85,5 +96,24 @@ public class Response<T> {
 	public void setTeamLead(TeamLead teamLead) {
 		this.teamLead = teamLead;
 	}
+
+	public List<TeamLead> getTeamlead() {
+		return teamlead;
+	}
+
+	public void setTeamlead(List<TeamLead> teamlead) {
+		this.teamlead = teamlead;
+	}
+
+	public List<Recruiter> getRecruiters() {
+		return recruiters;
+	}
+
+	public void setRecruiters(List<Recruiter> recruiters) {
+		this.recruiters = recruiters;
+	}
+
+	
+	
 
 }

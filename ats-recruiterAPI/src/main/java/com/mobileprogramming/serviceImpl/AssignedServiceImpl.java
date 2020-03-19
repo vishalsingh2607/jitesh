@@ -11,26 +11,26 @@ import com.mobileprogramming.repository.AssignedRepository;
 import com.mobileprogramming.service.AssignedService;
 
 @Service
-public class AssignedServiceImpl implements AssignedService{
+public class AssignedServiceImpl implements AssignedService {
 
 	@Autowired
 	private AssignedRepository repo;
-	
+
 	@Override
 	public List<Assigned> getAllDetails() {
-	
+
 		return repo.findAll();
 	}
 
 	@Override
 	public Optional<Assigned> getDetails(Integer id) {
-		
+
 		return repo.findById(id);
 	}
 
 	@Override
 	public Assigned saveDetails(Assigned assigned) {
-		
+
 		return repo.save(assigned);
 	}
 
@@ -43,7 +43,7 @@ public class AssignedServiceImpl implements AssignedService{
 	@Override
 	public String deleteAssigned(Integer id) {
 		repo.deleteById(id);
-		return "Record Deleted" ;
+		return "Record Deleted";
 	}
 
 	@Override
@@ -52,11 +52,8 @@ public class AssignedServiceImpl implements AssignedService{
 		for (Assigned assigned2 : assigned) {
 			repo.delete(assigned2);
 		}
-		
-		
-	}
 
-	
+	}
 
 	@Override
 	public List<Assigned> getByTlId(Integer t1) {
@@ -65,20 +62,15 @@ public class AssignedServiceImpl implements AssignedService{
 	}
 
 	@Override
-	public List<Assigned> findByRecruiterId(Integer t1) {
+	public Assigned findByRecruiterId(Integer t1) {
 		// TODO Auto-generated method stub
 		return repo.findByRecruiterId(t1);
 	}
 
-	
-
-	
-
-		
-	
-	
-
-	
-
+	@Override
+	public Assigned getByTeamLeadAndRecruiter(Integer t, Integer r) {
+		// TODO Auto-generated method stub
+		return repo.findByTlIdAndRecruiterId(t, r);
+	}
 
 }
