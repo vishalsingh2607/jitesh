@@ -11,9 +11,13 @@ public class ReportBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private int serialNo;
+	
 	private String name;
+	
 	private String technology;
+	
 	private String location;
+	
 	private Long contactNo;
 
 
